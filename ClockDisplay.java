@@ -70,28 +70,31 @@ public class ClockDisplay
     {
         return displayString;
     }
-    
+    public boolean get24HourDisplay()
+    {   int hour = 0;
+        boolean military = false;
+        if(hours.getValue() > 12){
+        military = true;
+            hour = hours.getValue() % 12;
+        
+        setTime(hour,minutes.getValue());
+        
+        
+    }
+    return military;
+}
     /**
      * Update the internal string that represents the display.
      */
     private void updateDisplay()
     {
-        int hour = hours.getValue();
-        String meridian;
-        
-        if(hour >= 12){
-            meridian = "pm";
-        }
-        else{
-            meridian = "am";
-        }
-        if(hour >= 12){
-            hour -=12;
-        }
-        if(hour == 0){
-         hour = 12;   
-        }
-        displayString = hour + ":" + 
-                        minutes.getDisplayValue() +meridian;
+             if(get24HourDisplay()){
+        displayString = hours.getDisplayValue() + ":" + 
+                        minutes.getDisplayValue()+ "PM";
+    }
+    else{
+        displayString = hours.getDisplayValue() + ":" + 
+                        minutes.getDisplayValue()+ "AM";
+}
     }
 }
